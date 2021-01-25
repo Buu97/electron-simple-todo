@@ -15,3 +15,8 @@ win:
     - target: nsis
       arch:
         - x64
+linux:
+  target:
+    - target: deb
+      arch:
+        - x64

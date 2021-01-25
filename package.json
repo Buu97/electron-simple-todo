@@ -3,7 +3,7 @@
   "name": "simple-todo",
   "description": "Simple TO DO app",
   "version": "1.0.0",
-  "author": "Buu97",
+  "author": "Buu97 <tokyratefinanahary97@gmail.com>",
   "main": "app/background.js",
   "license": "MIT",
   "scripts": {
@@ -13,18 +13,18 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
-    "better-sqlite3": "^7.1.2",
     "electron-serve": "^1.0.0",
-    "electron-store": "^6.0.1"
+    "electron-store": "^6.0.1",
+    "sqlite3": "^5.0.1"
   },
   "devDependencies": {
     "@material-ui/core": "^4.11.1",
-    "@types/better-sqlite3": "^5.4.1",
     "@types/node": "^14.6.4",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
     "electron": "^11.1.1",
     "electron-builder": "^22.9.1",
+    "electron-rebuild": "^2.3.4",
     "next": "^10.0.5",
     "nextron": "^6.0.3",
     "react": "^17.0.1",
