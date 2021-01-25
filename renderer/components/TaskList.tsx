@@ -3,6 +3,7 @@ import {
     Accordion, AccordionSummary, AccordionDetails,
     Typography
 } from '@material-ui/core';
+import { ExpandMore } from '@material-ui/icons';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => createStyles({
@@ -34,7 +35,8 @@ export const TaskList = () => {
 export const TaskItem = (props: any) => {
     return (
         <Accordion>
-            <AccordionSummary>
+            <AccordionSummary
+                expandIcon={<ExpandMore/>} >
                 <Typography>{props.title}</Typography>
             </AccordionSummary>
             <AccordionDetails>
