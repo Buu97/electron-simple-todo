@@ -16,8 +16,9 @@ if (isProd) {
   const mainWindow = createWindow('main', {
     width: 1080,
     height: 720,
+    autoHideMenuBar: true,
+    center: true,
   });
-  mainWindow.removeMenu();
 
   if (isProd) {
     await mainWindow.loadURL('app://./home.html');

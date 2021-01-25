@@ -5,6 +5,7 @@ import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import { AppBar, Box, Typography } from '@material-ui/core';
 import CenteredTabs from '../components/CenteredTabs';
 import { TaskList } from '../components/TaskList';
+import { TaskInput } from '../components/TaskInput';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -28,7 +29,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>
@@ -56,8 +57,10 @@ const Home = () => {
           value={value}
           handleChange={handleChange} />
       </AppBar>
+      
       <TabPanel value={value} index={0}></TabPanel>
       <TabPanel value={value} index={1}>
+        <TaskInput />
         <TaskList/>
       </TabPanel>
     </Fragment>
