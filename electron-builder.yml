@@ -1,0 +1,17 @@
+appId: com.buu97.simple-todo
+productName: Simple TO DO
+copyright: Copyright © 2021 Buu97
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+publish: null
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
