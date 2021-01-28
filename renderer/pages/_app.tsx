@@ -4,8 +4,9 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from '../lib/theme';
 import type { AppProps } from 'next/app';
+import { AppWrapper } from '../components/state/AppContext';
 
-export default function(props: AppProps) {
+const App = (props: AppProps) => {
   const { Component, pageProps } = props;
 
   React.useEffect(() => {
@@ -24,8 +25,13 @@ export default function(props: AppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Component {...pageProps} />
+        <AppWrapper>
+          <Component {...pageProps} />
+        </AppWrapper>
       </ThemeProvider>
     </React.Fragment>
   );
 }
+
+
+export default App;

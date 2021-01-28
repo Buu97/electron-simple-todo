@@ -1,9 +1,11 @@
+import { useContext } from 'react';
 import {
     Accordion, AccordionSummary, AccordionDetails,
     Typography
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
+import AppContext from './state/AppContext';
 
 const useStyles = makeStyles(() => createStyles({
     root: {
@@ -14,28 +16,29 @@ const useStyles = makeStyles(() => createStyles({
 
 export const TaskList = () => {
     const classes = useStyles();
+    const { tasks } = useContext(AppContext);
 
     return (
         <div className={classes.root}>
-            <TaskItem
-                title="Lorem ipsum dolor sit."
-                description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, illo." />
-            <TaskItem
-                title="Lorem ipsum dolor sit amet consectetur adipisicing."
-                description="Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Sit rerum facilis quisquam quas modi molestias numquam debitis ab ipsam libero laborum alias,
-                ut repellat amet magni voluptatem.
-                Ea provident earum minima nemo nostrum repellendus, consequuntur aperiam vel quod!
-                Natus doloribus nulla facere iure temporibus voluptates sed totam alias expedita harum." />
+            { renderTaskList(tasks) }
         </div>
     );
+}
+
+function renderTaskList(tasks: any[]) {
+    return tasks.map((task, index) => (
+        <TaskItem
+            title={task.title}
+            description={task.description}
+            key={index} />
+    ));
 }
 
 export const TaskItem = (props: any) => {
     return (
         <Accordion>
             <AccordionSummary
-                expandIcon={<ExpandMore/>} >
+                expandIcon={<ExpandMore />} >
                 <Typography>{props.title}</Typography>
             </AccordionSummary>
             <AccordionDetails>
