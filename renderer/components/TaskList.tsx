@@ -1,11 +1,12 @@
-import { useContext } from 'react';
+import { useState } from 'react';
 import {
     Accordion, AccordionSummary, AccordionDetails,
     Typography
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import AppContext from './state/AppContext';
+import PropTypes, { InferProps } from 'prop-types';
+import { Task } from '../../main/database/models/Task';
 
 const useStyles = makeStyles(() => createStyles({
     root: {
@@ -14,23 +15,26 @@ const useStyles = makeStyles(() => createStyles({
 }));
 
 
-export const TaskList = () => {
+export function TaskList({ tasks }: InferProps<typeof TaskList.propTypes>) {
     const classes = useStyles();
-    const { tasks } = useContext(AppContext);
+    const [taskList, setTaskList] = useState(tasks);
 
     return (
         <div className={classes.root}>
-            { renderTaskList(tasks) }
+            { renderTaskList(taskList)}
         </div>
     );
 }
+TaskList.propTypes = {
+    tasks: PropTypes.array.isRequired
+}
 
-function renderTaskList(tasks: any[]) {
+function renderTaskList(tasks: Task[]) {
     return tasks.map((task, index) => (
         <TaskItem
             title={task.title}
             description={task.description}
-            key={index} />
+            key={task.id} />
     ));
 }
 

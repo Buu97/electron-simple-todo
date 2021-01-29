@@ -15,9 +15,13 @@ export class Task {
     @Column("date")
     due_date: Date;
 
-    @Column("integer")
+    @Column("integer", {
+        nullable: true
+    })
     priority: number;
 
-    @Column("boolean")
+    @Column("boolean", {
+        default: false
+    })
     done: boolean;
 }

@@ -3,11 +3,13 @@ import { Task } from '../database/models/Task';
 
 const connection = createConnection({
     type: 'sqlite',
-    database: '../database/todo.db',
+    database: 'todo.db',
     entities: [
         Task
     ],
     synchronize: true
 });
 
-export default connection;
+export default async () => {
+    return await connection
+}

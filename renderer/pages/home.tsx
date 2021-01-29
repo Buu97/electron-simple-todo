@@ -1,22 +1,13 @@
 import React, { Fragment, useState } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { InferProps } from 'prop-types';
 import Head from 'next/head';
-import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
-import { AppBar, Box, Typography } from '@material-ui/core';
+import { AppBar, Box } from '@material-ui/core';
 import CenteredTabs from '../components/CenteredTabs';
 import { TaskList } from '../components/TaskList';
 import { TaskInput } from '../components/TaskInput';
+import { GetStaticProps } from 'next';
 
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      textAlign: 'center',
-      paddingTop: theme.spacing(4),
-    },
-  })
-);
-function TabPanel(props) {
+function TabPanel(props: InferProps<typeof TabPanel.propTypes>) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -41,7 +32,16 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-const Home = () => {
+export const getStaticProps: GetStaticProps = async (context) => {
+  return {
+    props: {
+      tasks : []
+    }
+  }
+}
+
+
+function Home(props: InferProps<typeof Home.propTypes>) {
   const [value, setValue] = useState(1);
   const handleChange = (event: any, newValue: number) => {
     setValue(newValue);
@@ -57,14 +57,18 @@ const Home = () => {
           value={value}
           handleChange={handleChange} />
       </AppBar>
-      
+
       <TabPanel value={value} index={0}></TabPanel>
       <TabPanel value={value} index={1}>
         <TaskInput />
-        <TaskList/>
+        <TaskList
+          tasks={props.tasks} />
       </TabPanel>
     </Fragment>
   );
 };
+Home.propTypes = {
+  tasks: PropTypes.array.isRequired
+}
 
 export default Home;
