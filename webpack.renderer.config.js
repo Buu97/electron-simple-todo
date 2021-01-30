@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     mode: 'development',
     target: 'electron-renderer',
-    entry: ['react-hot-loader/patch', './src/renderer/App.tsx'],
+    entry: ['./src/renderer/index.tsx'],
     module: {
         rules: [
             {
@@ -18,6 +18,21 @@ module.exports = {
                         babelrc: true,
                     },
                 },
+            },
+            {
+                test: /\.(scss|css)$/,
+                use: ['style-loader', 'css-loader', 'sass-loader'],
+            },
+            {
+                test: /\.(jpg|png|woff|woff2|eot|ttf)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192, // in bytes
+                        },
+                    },
+                ],
             },
         ],
     },
@@ -36,7 +51,7 @@ module.exports = {
         publicPath: '/',
     },
     resolve: {
-        extensions: ['.tsx', '.wasm', '.mjs', '.js', '.json'],
+        extensions: ['.tsx', '.wasm', '.mjs', '.js', '.json', '.ts'],
         alias: {
             'react-dom': '@hot-loader/react-dom',
         },
