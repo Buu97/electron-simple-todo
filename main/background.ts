@@ -1,6 +1,7 @@
 import { app } from 'electron';
 import serve from 'electron-serve';
-import { createWindow } from './helpers';
+import { Task } from './database/models/Task';
+import { createWindow, connection } from './helpers';
 
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
@@ -12,6 +13,20 @@ if (isProd) {
 
 (async () => {
   await app.whenReady();
+
+  try {
+    const db = await connection();
+    const repository = db.getRepository(Task);
+
+    const task = new Task();
+    task.title = 'One task';
+    task.description = 'A description of a task';
+    task.due_date = new Date();
+
+    await repository.save(task);
+  } catch (error) {
+    console.error(error);
+  }
 
   const mainWindow = createWindow('main', {
     width: 1080,

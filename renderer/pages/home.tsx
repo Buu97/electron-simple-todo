@@ -35,7 +35,12 @@ TabPanel.propTypes = {
 export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
-      tasks : []
+      tasks : [
+        {
+          title: 'An example of task',
+          description: 'This is a static task fetched from GetStaticProps.'
+        }
+      ]
     }
   }
 }
