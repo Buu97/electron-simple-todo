@@ -1,10 +1,13 @@
-import { app, BrowserWindow, ipcMain, Notification } from 'electron';
+import 'reflect-metadata';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import { Connection } from './helpers';
+import { Task } from './models';
 import * as path from 'path';
 import * as url from 'url';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-function createWindow() {
+async function createWindow() {
     const mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -24,12 +27,12 @@ function createWindow() {
         mainWindow.loadURL('http://localhost:8855');
     }
     
-    ipcMain.on('notify', (_, message) => {
-        console.log(message);
-        new Notification({
-            title: message,
-            body: '\nOnly works in ipcMain'
-        }).show();
+    const db = await Connection();
+
+    ipcMain.handle('get_task_list', async (event) => {
+        const taskRepository = db.getRepository(Task);
+        const tasklist = await taskRepository.find();
+        event.sender.postMessage('get_task_list', tasklist);
     });
 }
 

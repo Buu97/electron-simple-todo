@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const compiler = webpack({
     mode: 'development',
     resolve: {
-        extensions: ['.tsx', '.ts', '.js']
+        extensions: ['.tsx', '.ts', '.js', '.wasm', '.mjs', 'json']
     },
     entry: './src/main/index.ts',
     target: 'electron-main',

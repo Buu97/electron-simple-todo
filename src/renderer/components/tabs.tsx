@@ -27,7 +27,7 @@ TabPanel.propTypes = {
     value: PropTypes.any.isRequired,
 };
 
-export const CenteredTab = (props: InferProps<typeof CenteredTab.propTypes>) => {
+export function CenteredTab (props: InferProps<typeof CenteredTab.propTypes>) {
     return (
         <Tabs
             value={props.value}
