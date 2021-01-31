@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { InferProps } from 'prop-types';
 import { Box, Tabs, Tab } from '@material-ui/core';
 
 
-export function TabPanel(props) {
+export function TabPanel(props: InferProps<typeof TabPanel.propTypes>) {
     const { children, value, index, ...other } = props;
 
     return (
@@ -27,7 +27,7 @@ TabPanel.propTypes = {
     value: PropTypes.any.isRequired,
 };
 
-export function CenteredTab (props) {
+export function CenteredTab(props: InferProps<typeof CenteredTab.propTypes>) {
     return (
         <Tabs
             value={props.value}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { InferProps } from 'prop-types';
 import {
     Accordion, AccordionDetails, AccordionSummary,
     Typography,
@@ -22,17 +22,17 @@ const useStyles = makeStyles((theme) => createStyles({
     }
 }));
 
-export function TaskInput(props) {
+export function TaskInput(props: InferProps<typeof TaskInput.propTypes>) {
     const classes = useStyles();
     const [text, setText] = useState('');
 
-    const handleInput = ({ key }) => {
+    const handleInput = ({ key }: any) => {
         if (key === 'Enter' && text?.trim()?.length > 5) {
             props.addTask({ title: text, description: '' });
             setText('');
         }
     }
-    const handleTextChange = ({ target }) => {
+    const handleTextChange = ({ target }: any) => {
         setText(target.value);
     }
 
@@ -53,10 +53,10 @@ TaskInput.propTypes = {
     addTask: PropTypes.func.isRequired,
 }
 
-export function TaskList({ tasks }) {
+export function TaskList({ tasks }: InferProps<typeof TaskList.propTypes>) {
     const [taskList, setTaskList] = useState(tasks);
 
-    const renderTasks = (list) => {
+    const renderTasks = (list: any[]) => {
         return list.map((task, index) => (
             <TaskItem
                 title={task.title}
@@ -64,7 +64,7 @@ export function TaskList({ tasks }) {
                 key={index} />
         ))
     }
-    const addTask = (task) => {
+    const addTask = (task: any) => {
         setTaskList([...taskList, task]);
         ipcRenderer.send('add_task', task);
     }
@@ -87,7 +87,7 @@ TaskList.propTypes = {
     tasks: PropTypes.array.isRequired,
 }
 
-const TaskItem = (props) => {
+const TaskItem = (props: any) => {
     return (
         <Accordion>
             <AccordionSummary
