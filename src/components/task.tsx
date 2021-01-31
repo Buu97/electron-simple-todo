@@ -54,9 +54,9 @@ TaskInput.propTypes = {
 export function TaskList({ tasks }: InferProps<typeof TaskList.propTypes>) {
     const [taskList, setTaskList] = useState(tasks);
 
-    const addTask = (task: any) => {
+    const addTask = async (task: any) => {
+        task = await ipcRenderer.invoke('add_task', task);
         setTaskList([...taskList, task]);
-        ipcRenderer.send('add_task', task);
     }
     const updateTask = (task: any) => {
         const index = taskList.findIndex(t =>t.id === task.id);

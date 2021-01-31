@@ -32,11 +32,12 @@ const createWindow = async () => {
         }
         return tasklist;
     });
-    ipcMain.on('add_task', async (event, task) => {
+    ipcMain.handle('add_task', async (event, task) => {
         if (db) {
             const repo = db.getRepository('Task');
-            await repo.save(task);
+            task = await repo.save(task);
         }
+        return task;
     });
     ipcMain.on('update_task', async (event, task) => {
         if (db) {
