@@ -15,14 +15,12 @@ const createWindow = async () => {
     });
 
     const db = await getConnection();
-    
     if (isDev) {
         mainWindow.loadURL('http://localhost:3000');
     } else {
         mainWindow.loadURL(format({
-            pathname: join(__dirname, '/index.html'),
-            protocol: 'file:',
-            slashes: true
+            pathname: join(__dirname, '..', 'build/index.html'),
+            protocol: 'file:'
         }));
     }
 
