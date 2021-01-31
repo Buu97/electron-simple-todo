@@ -22,7 +22,7 @@
   },
   "main": "app/main.js",
   "scripts": {
-    "start": "concurrently \"yarn run react-start\" \"wait-on http://localhost:3000 && yarn run start-electron\"",
+    "start": "concurrently \"yarn run react-start\" \"wait-on http://localhost:5000 && yarn run start-electron\"",
     "build": "rescripts build",
     "package": "electron-builder",
     "postinstall": "electron-builder install-app-deps",

@@ -13,7 +13,23 @@ module.exports = new EntitySchema({
         },
         description: {
             type: "text",
-            default: ""
+            default: "",
+            nullable: true
+        },
+        done: {
+            type: "boolean",
+            default: false
+        },
+        due_time: {
+            type: 'date',
+            nullable: true,
+            default: () => {
+                return 'CURRENT_DATE'
+            }
+        },
+        priority: {
+            type: 'int',
+            default: 3
         }
     }
 });

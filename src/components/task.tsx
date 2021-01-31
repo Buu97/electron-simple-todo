@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes, { InferProps } from 'prop-types';
 import {
-    Accordion, AccordionDetails, AccordionSummary,
-    Typography,
     Paper,
     TextField
 } from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { ipcRenderer } from 'electron';
+import TaskItem from './taskItem';
 
 const useStyles = makeStyles((theme) => createStyles({
     root: {
@@ -56,17 +54,24 @@ TaskInput.propTypes = {
 export function TaskList({ tasks }: InferProps<typeof TaskList.propTypes>) {
     const [taskList, setTaskList] = useState(tasks);
 
-    const renderTasks = (list: any[]) => {
-        return list.map((task, index) => (
-            <TaskItem
-                title={task.title}
-                description={task.description}
-                key={index} />
-        ))
-    }
     const addTask = (task: any) => {
         setTaskList([...taskList, task]);
         ipcRenderer.send('add_task', task);
+    }
+    const updateTask = (task: any) => {
+        const index = taskList.findIndex(t =>t.id === task.id);
+        taskList[index] = {...taskList[index], task};
+        setTaskList(taskList);
+        ipcRenderer.send('update_task', task);
+    }
+    
+    const renderTasks = (list: any[]) => {
+        return list.map((task, index) => (
+            <TaskItem
+                task={task}
+                updateTask={updateTask}
+                key={index} />
+        ));
     }
 
     useEffect(() => {
@@ -85,20 +90,4 @@ export function TaskList({ tasks }: InferProps<typeof TaskList.propTypes>) {
 }
 TaskList.propTypes = {
     tasks: PropTypes.array.isRequired,
-}
-
-const TaskItem = (props: any) => {
-    return (
-        <Accordion>
-            <AccordionSummary
-                expandIcon={<ExpandMore />} >
-                <Typography>
-                    {props.title}
-                </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-                {props.description}
-            </AccordionDetails>
-        </Accordion>
-    );
 }

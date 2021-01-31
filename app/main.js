@@ -16,7 +16,7 @@ const createWindow = async () => {
 
     const db = await getConnection();
     if (isDev) {
-        mainWindow.loadURL('http://localhost:3000');
+        mainWindow.loadURL('http://localhost:3001');
     } else {
         mainWindow.loadURL(format({
             pathname: join(__dirname, '..', 'build/index.html'),
@@ -38,12 +38,23 @@ const createWindow = async () => {
             await repo.save(task);
         }
     });
+    ipcMain.on('update_task', async (event, task) => {
+        if (db) {
+            const repo = db.getRepository('Task');
+            const found = await repo.findOne(task.id);
+            if (found) {
+                delete task.id;
+                await repo.save({ ...found, ...task });
+            }
+        }
+    });
 }
 
 async function getConnection() {
     try {
         return await Connection;
     } catch (error) {
+        console.error(error);
         return null;
     }
 }
