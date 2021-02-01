@@ -25,6 +25,7 @@
     "start": "concurrently \"yarn run react-start\" \"wait-on http://localhost:5000 && yarn run start-electron\"",
     "build": "rescripts build",
     "package": "electron-builder",
+    "package:win": "electron-builder --win",
     "postinstall": "electron-builder install-app-deps",
     "react-start": "BROWSER=none rescripts start",
     "start-electron": "electron ./app/main.js"
