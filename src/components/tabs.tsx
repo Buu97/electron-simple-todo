@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes, { InferProps } from 'prop-types';
-import { Box, Tabs, Tab } from '@material-ui/core';
+import { Box, Tabs } from '@material-ui/core';
+import Tab from '@material-ui/core/Tab';
 
 
 export function TabPanel(props: InferProps<typeof TabPanel.propTypes>) {
@@ -35,12 +37,25 @@ export function CenteredTab(props: InferProps<typeof CenteredTab.propTypes>) {
             textColor="primary"
             indicatorColor="primary"
             centered>
-            <Tab label="Lists" />
-            <Tab label="Scheduled" />
+            {props.children}
         </Tabs>
     )
 }
 CenteredTab.propTypes = {
     value: PropTypes.number.isRequired,
     handleChange: PropTypes.func.isRequired,
+    children: PropTypes.any.isRequired,
+}
+
+export function LinkTab(props: InferProps<typeof LinkTab.propTypes>) {
+    return (
+        <Tab
+            component={Link}
+            {...props} />
+    );
+}
+LinkTab.propTypes = {
+    label: PropTypes.string,
+    to: PropTypes.string.isRequired,
+    children: PropTypes.element,
 }

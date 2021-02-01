@@ -52,7 +52,7 @@ TaskInput.propTypes = {
 }
 
 export function TaskList({ tasks }: InferProps<typeof TaskList.propTypes>) {
-    const [taskList, setTaskList] = useState(tasks);
+    const [taskList, setTaskList] = useState(tasks || []);
 
     const addTask = async (task: any) => {
         task = await ipcRenderer.invoke('add_task', task);
