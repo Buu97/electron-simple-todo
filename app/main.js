@@ -3,6 +3,7 @@ const { format } = require('url');
 const { join } = require('path');
 const isDev = require('electron-is-dev');
 const Connection = require('./database/Connection');
+const { Connection: ConnectionType } = require('typeorm');
 
 const createWindow = async () => {
     const mainWindow = new BrowserWindow({
@@ -34,8 +35,18 @@ const createWindow = async () => {
     });
     ipcMain.handle('add_task', async (event, task) => {
         if (db) {
-            const repo = db.getRepository('Task');
-            task = await repo.save(task);
+            try {
+                const repo = db.getRepository('Task');
+                const groupRepo = db.getRepository('TaskGroup');
+                const defaultGroup = await groupRepo.findOne({ isDefault: 1 });
+
+                task = await repo.save({
+                    group: defaultGroup.id,
+                    ...task
+                });
+            } catch (error) {
+                console.error(error);
+            }
         }
         return task;
     });
@@ -49,7 +60,29 @@ const createWindow = async () => {
             }
         }
     });
+
+    await createDefaultTaskGroup(db);
 }
+const createDefaultTaskGroup = async (db) => {
+    try {
+        if (db && db instanceof ConnectionType) {
+            const repo = db.getRepository('TaskGroup');
+            const defaultGroup = await repo.findOne({ isDefault: true });
+            if (!defaultGroup) {
+                console.log('creating default group');
+                await repo.save({
+                    title: 'My tasks',
+                    isDefault: true
+                });
+            } else {
+                console.log('default group exists');
+            }
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 
 async function getConnection() {
     try {

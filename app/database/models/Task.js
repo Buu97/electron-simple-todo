@@ -31,5 +31,17 @@ module.exports = new EntitySchema({
             type: 'int',
             default: 3
         }
+    },
+    relations: {
+        group: {
+            target: 'TaskGroup',
+            type: 'many-to-one',
+            joinColumn: {
+                name: 'group',
+                referencedColumnName: 'id',
+            },
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+        }
     }
 });

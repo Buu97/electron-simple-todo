@@ -5,6 +5,7 @@ module.exports = createConnection({
     database: 'todo.db',
     synchronize: true,
     entities: [
-        require('./models/Task')
+        require('./models/Task'),
+        require('./models/TaskGroup')
     ]
 });

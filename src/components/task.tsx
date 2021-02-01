@@ -89,5 +89,5 @@ export function TaskList({ tasks }: InferProps<typeof TaskList.propTypes>) {
     );
 }
 TaskList.propTypes = {
-    tasks: PropTypes.array.isRequired,
+    tasks: PropTypes.array,
 }
